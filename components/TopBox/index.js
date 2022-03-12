@@ -24,7 +24,7 @@ export default class TopBox extends Component
 	async fetchSelected(city)
 	{
 		const first ="http://api.openweathermap.org/data/2.5/weather?q="
-		const second = "&units=metric&APPID=0da1480eba025d430229e68cef88a466"
+		const second = "&units=metric&APPID="
 		const url = first.concat(city).concat(second)
 		const response = await fetch(url)
 		const data = await response.json();
@@ -39,7 +39,7 @@ export default class TopBox extends Component
 
 	async componentDidMount()
 	{
-		const url ="http://api.openweathermap.org/data/2.5/weather?q=London&units=metric&APPID=0da1480eba025d430229e68cef88a466"
+		const url ="http://api.openweathermap.org/data/2.5/weather?q=London&units=metric&APPID="
 		const response = await fetch(url)
 		const data = await response.json();
 		this.setState({
