@@ -1,6 +1,6 @@
 // import preact
 import { h, render, Component } from 'preact';
-import TopBox from '../TopBox'
+import {TopBox} from '../TopBox';
 
 export default class Button extends Component {
 
@@ -14,7 +14,7 @@ export default class Button extends Component {
 		}
 		return (
 			<div>
-				<TopBox />
+				<TopBox/>
 			</div>
 		);
 	}

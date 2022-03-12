@@ -4,13 +4,12 @@ import { h, render, Component } from 'preact';
 import style from '../button/style_iphone';
 import regeneratorRuntime from "regenerator-runtime";
 
-export class Box1 extends Component
+export class BoxBottom extends Component
 {
 	render(){	
 		return(
 			<div> 
-				<div class ={style.box1}>
-					<p class={style.sevenday}>See 7 Day Forecast</p></div> 
+				<div class ={style.boxBottom}></div>
 			</div>
 		);
 	}
