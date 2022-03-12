@@ -8,6 +8,7 @@ import $ from 'jquery';
 // import the Button component
 import Button from '../button';
 
+
 // THIS Was when things started
 
 export default class Iphone extends Component {
@@ -26,7 +27,7 @@ export default class Iphone extends Component {
 	// a call to fetch weather data via wunderground
 	fetchWeatherData = () => {
 		// API URL with a structure of : ttp://api.wunderground.com/api/key/feature/q/country-code/city.json
-		var url = "http://api.openweathermap.org/data/2.5/weather?q=London&units=metric&APPID=cf17e23b1d108b29a4d738d2084baf5";
+		var url = "http://api.openweathermap.org/data/2.5/weather?q=London&units=metric&APPID=0da1480eba025d430229e68cef88a466";
 		$.ajax({
 			url: url,
 			dataType: "jsonp",

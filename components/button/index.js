@@ -1,6 +1,7 @@
 // import preact
 import { h, render, Component } from 'preact';
-	
+import TopBox from '../TopBox'
+
 export default class Button extends Component {
 
 	// rendering a function when the button is clicked
@@ -13,9 +14,7 @@ export default class Button extends Component {
 		}
 		return (
 			<div>
-				<button onClick={cFunction}>
-					Display Weather
-				</button>
+				<TopBox />
 			</div>
 		);
 	}
