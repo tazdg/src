@@ -1,75 +1,152 @@
 // import preact
 import { h, render, Component } from 'preact';
 // import stylesheets for ipad & button
-import style from './style';
-import style_iphone from '../button/style_iphone';
+// import style from './style';
+import style from '../button/style_iphone';
+import styleI from './style'
 // import jquery for API calls
 import $ from 'jquery';
 // import the Button component
-import Button from '../button';
-
-
-// THIS Was when things started
+import regeneratorRuntime from "regenerator-runtime";
 
 export default class Iphone extends Component {
-//var Iphone = React.createClass({
 
-	// a constructor with initial set states
-	constructor(props){
-		super(props);
-		// temperature state
-		this.state.temp = "";
-		// button display state
-		this.setState({ display: true });
-	}
-
-
-	// a call to fetch weather data via wunderground
-	fetchWeatherData = () => {
-		// API URL with a structure of : ttp://api.wunderground.com/api/key/feature/q/country-code/city.json
-		var url = "http://api.openweathermap.org/data/2.5/weather?q=London&units=metric&APPID=0da1480eba025d430229e68cef88a466";
-		$.ajax({
-			url: url,
-			dataType: "jsonp",
-			success : this.parseResponse,
-			error : function(req, err){ console.log('API call failed ' + err); }
-		})
-		// once the data grabbed, hide the button
-		this.setState({ display: false });
-	}
-
-	// the main render method for the iphone component
-	render() {
-		// check if temperature data is fetched, if so add the sign styling to the page
-		const tempStyles = this.state.temp ? `${style.temperature} ${style.filled}` : style.temperature;
-
-		// display all weather data
-		return (
-			<div class={ style.container }>
-				<div class={ style.header }>
-					<div class={ style.city }>{ this.state.locate }</div>
-					<div class={ style.conditions }>{ this.state.cond }</div>
-					<span class={ tempStyles }>{ this.state.temp }</span>
-				</div>
-				<div class={ style.details }></div>
-				<div class= { style_iphone.container }>
-					{ this.state.display ? <Button class={ style_iphone.button } clickFunction={ this.fetchWeatherData }/ > : null }
-				</div>
+	render()
+	{
+		return(
+			<div class={ styleI.container }>
+			<MainWeather/>
+			<SportData/>
 			</div>
-
-		);
-	}
-
-	parseResponse = (parsed_json) => {
-		var location = parsed_json['name'];
-		var temp_c = parsed_json['main']['temp'];
-		var conditions = parsed_json['weather']['0']['description'];
-
-		// set states for fields so they could be rendered later on
-		this.setState({
-			locate: location,
-			temp: temp_c,
-			cond : conditions
-		});
+			)
 	}
 }
+
+class MainWeather extends Component
+{
+
+	state = {
+		loading: true,
+		Location: null,
+		Temp: null,
+		tHigh: null,
+		tLow: null,
+		day: new Date(),
+		Days:["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
+	}
+
+	async componentWillMount()
+	{
+		const url ="http://api.openweathermap.org/data/2.5/weather?q=London&units=metric&APPID=0da1480eba025d430229e68cef88a466"
+		const response = await fetch(url)
+		const data = await response.json();
+		this.setState({
+			Location: data.name,
+			Temp: Math.round(data.main.temp),
+			tHigh: Math.round(data.main.temp_max), 
+			tLow: Math.round(data.main.temp_min),
+			loading : false})
+	}
+
+	async fetchSelected(city)
+	{
+		const url ="http://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=metric&APPID=0da1480eba025d430229e68cef88a466"
+		const response = await fetch(url)
+		const data = await response.json();
+		this.setState({
+			Location: data.name,
+			Temp: Math.round(data.main.temp),
+			tHigh: Math.round(data.main.temp_max), 
+			tLow: Math.round(data.main.temp_min),
+			loading : false})
+	}
+
+	render(){	
+		return(
+		<div class = "style.all">
+			<div> {this.state.loading ? <div>loading</div>: 
+				<div class ={style.box}>
+					<p class={style.appName}>Weathering With You</p>
+					<p class = {style.today} >TODAY</p>
+					<p class = {style.locText}>{this.state.Location.toUpperCase()}</p>	
+					<p class = {style.tempText}>{this.state.Temp}<sup>o</sup>C</p>
+					<p class = {style.HiLoText}>Low {this.state.tLow}<sup>o</sup></p>
+					<p class = {style.HiLoText}>High {this.state.tHigh}<sup>o</sup></p>
+					<p class = {style.dayText}>{this.state.Days[this.state.day.getDay()]}</p>
+				</div>
+				}
+			<SevenDay/>
+			<div class ={style.boxR}>
+				<p class={style.loc}>Change Location</p>
+				<select class = {style.select} onChange={(e) => this.fetchSelected(e.target.value)}>
+					<option value="" disabled selected >Select A City</option>
+					<option value="London">London</option>
+					<option value="Moscow">Moscow</option>
+					<option value="Paris">Paris</option>
+					<option value="Sydney">Sydney</option>
+					<option value="Washington">Washington</option>
+				</select>
+			</div>
+			<ChangeSport/>
+			</div>
+		</div>
+		);
+	}
+}
+
+class SevenDay extends Component
+{
+	constructor(props)
+	{
+		super(props);
+
+	}
+
+	render()
+	{
+		return(
+			<div> 
+				<div class ={style.box1}>
+					<p class={style.sevenday}>See 7 Day Forecast</p>
+				</div> 
+			</div>
+		)
+	}
+}
+
+class ChangeSport extends Component
+{
+	constructor(props)
+	{
+		super(props);
+
+	}
+
+	render(){	
+		return(
+			<div> 
+				<div class ={style.boxL}>
+					<p class={style.change}>Change Sport</p>
+				</div>
+			</div>
+		);
+	}
+}
+
+
+class SportData extends Component
+{
+	constructor(props)
+	{
+		super(props);
+	}
+
+	render(){	
+		return(
+			<div> 
+				<div class ={style.boxBottom}></div>
+			</div>
+		);
+	}
+}
+
