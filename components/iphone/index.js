@@ -114,7 +114,7 @@ class MainWeather extends Component
 							<option value="Moscow">Moscow</option>
 							<option value="Paris">Paris</option>
 							<option value="Sydney">Sydney</option>
-							<option value="Washington">Washington</option>
+							<option value="Kyiv">Kyiv</option>
 						</select>
 					</div>
 					<ChangeSport/>
@@ -181,8 +181,7 @@ class SevenDay extends Component
 	render()
 	{
 		return(
-			<div class={style.sevenBox}> 
-			
+			<div class ={style.test}>
 			<p class = {style.forecastCity}>{this.state.city.toUpperCase()}</p>
 				<table class = {style.forecast}>
 					<tr>
@@ -228,7 +227,7 @@ class SevenDay extends Component
 						<td>{this.state.xCond[6]}</td>
 					</tr>
 				</table>
-			</div>
+		</div>
 		)
 	}
 }
