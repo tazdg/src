@@ -48,7 +48,16 @@ export default class Iphone extends Component {
 		return (
 			<div class={ style.container }>
 				<header class = {style.overview}>
-					<p class = {style.text} >Weathering With You</p>
+					<p>
+					<img src="../../assets/icons/settings-icon.png" class = {style.settingsButton} alt="Settings"  width="40" height="40"/>
+					<img src="../../assets/icons/refresh-icon.png" class = {style.refreshButton} alt="Refreash"  width="40" height="40"/>
+					
+					</p>
+					
+					<p class = {style.appName} >Weathering With You</p>
+					<h2>TODAY</h2>
+					<h6>Monday</h6>
+					<h5>LONDON</h5>
 				</header>
 
 				<div class={ style.header }>
