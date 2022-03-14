@@ -11,7 +11,7 @@ import Button from '../button';
 // THIS Was when things started
 
 export default class Iphone extends Component {
-//var Iphone = React.createClass({
+// var Iphone = React.createClass({
 
 	// a constructor with initial set states
 	constructor(props){
@@ -26,7 +26,9 @@ export default class Iphone extends Component {
 	// a call to fetch weather data via wunderground
 	fetchWeatherData = () => {
 		// API URL with a structure of : ttp://api.wunderground.com/api/key/feature/q/country-code/city.json
-		var url = "http://api.openweathermap.org/data/2.5/weather?q=London&units=metric&APPID=cf17e23b1d108b29a4d738d2084baf5";
+		var url = "http://api.openweathermap.org/data/2.5/weather?q=London,uk&callback=test&APPID=aec509c22a90c6671cbfda7a5dda64d5";
+		
+		
 		$.ajax({
 			url: url,
 			dataType: "jsonp",
@@ -45,19 +47,34 @@ export default class Iphone extends Component {
 		// display all weather data
 		return (
 			<div class={ style.container }>
+				<header class = {style.overview}>
+					<p class = {style.text} >Weathering With You</p>
+				</header>
+
 				<div class={ style.header }>
+				
 					<div class={ style.city }>{ this.state.locate }</div>
 					<div class={ style.conditions }>{ this.state.cond }</div>
 					<span class={ tempStyles }>{ this.state.temp }</span>
 				</div>
 				<div class={ style.details }></div>
+
 				<div class= { style_iphone.container }>
 					{ this.state.display ? <Button class={ style_iphone.button } clickFunction={ this.fetchWeatherData }/ > : null }
 				</div>
+
+				
+				
+				
 			</div>
 
+			
 		);
+
+		
 	}
+
+	
 
 	parseResponse = (parsed_json) => {
 		var location = parsed_json['name'];
@@ -69,6 +86,7 @@ export default class Iphone extends Component {
 			locate: location,
 			temp: temp_c,
 			cond : conditions
+			
 		});
 	}
 }
