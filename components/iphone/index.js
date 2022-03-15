@@ -21,7 +21,6 @@ export default class Iphone extends Component {
 
 class MainWeather extends Component
 {
-
 	state = {
 		loading: true,
 		Location: null,
@@ -55,7 +54,7 @@ class MainWeather extends Component
 			tHigh: Math.round(data.main.temp_max), 
 			tLow: Math.round(data.main.temp_min),
 			loading : false,
-			icon: "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png",
+			icon: "http://openweathermap.org/img/wn/" + data.weather[0].icon + "@2x.png",
 			lon : data.coord.lon,
 			lat : data.coord.lat,
 			cond: data.weather[0].description	
@@ -73,7 +72,7 @@ class MainWeather extends Component
 			tHigh: Math.round(data.main.temp_max), 
 			tLow: Math.round(data.main.temp_min),
 			loading : false,
-			icon: "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png",
+			icon: "http://openweathermap.org/img/wn/" + data.weather[0].icon + "@2x.png",
 			lon : data.coord.lon,
 			lat : data.coord.lat,
 			cond: data.weather[0].description	
@@ -147,10 +146,19 @@ class SevenDay extends Component
 			xDates: new Array(7),
 			xLogos: new Array(7),
 			xTemp: new Array(7),
-			xCond: new Array(7)
+			xCond: new Array(7),
+			back: false
 		})
 
 	}
+
+		setBack()
+		{
+			this.setState
+			({
+				back:true
+			})
+		}
 
 	async componentWillMount()
 	{		
@@ -166,15 +174,11 @@ class SevenDay extends Component
 		for(let i = 0; i<=6; i++)
 		{
 			Dates[i]= this.state.Days[new Date(data.daily[i].dt*1000-(data.timezone_offset*1000)).getDay()]
-			Logos[i]= "http://openweathermap.org/img/w/" + data.daily[i].weather[0].icon + ".png"
+			Logos[i]= "http://openweathermap.org/img/wn/" + data.daily[i].weather[0].icon + "@2x.png"
 			Temp[i]= data.daily[i].temp.day
 			Cond[i]= data.daily[i].weather[0].description
 		}
 
-		console.log(Dates)
-		console.log(Logos)
-		console.log(Temp)
-		console.log(Cond)
 		this.setState({
 			xDates: Dates,
 			xLogos: Logos,
@@ -187,53 +191,61 @@ class SevenDay extends Component
 	render()
 	{
 		return(
-			<div class ={style.test}>
+			<div>
+				{
+					this.state.back ? <MainWeather/> :<div class ={style.test}>
+					
+					<a href='#'><img onClick={() =>this.setBack()} class = {style.ex} src='../assets/icons/Untitled_Artwork_75.png'></img></a>
 			<p class = {style.forecastCity}>{this.state.city.toUpperCase()}</p>
 				<table class = {style.forecast}>
 					<tr>
 						<td>{this.state.xDates[0]}</td>
-						<td><img src = {this.state.xLogos[0]}></img></td>
+						<td><img class = {style.sevenicon} src = {this.state.xLogos[0]}></img></td>
 						<td>{Math.round(this.state.xTemp[0])}<sup>o</sup>C</td>
 						<td>{this.state.xCond[0]}</td>
 					</tr>
 					<tr>
 						<td>{this.state.xDates[1]}</td>
-						<td><img src = {this.state.xLogos[1]}></img></td>
+						<td><img class = {style.sevenicon} src = {this.state.xLogos[1]}></img></td>
 						<td>{Math.round(this.state.xTemp[1])}<sup>o</sup>C</td>
 						<td>{this.state.xCond[1]}</td>
 					</tr>
 					<tr>
 						<td>{this.state.xDates[2]}</td>
-						<td><img src = {this.state.xLogos[2]}></img></td>
+						<td><img class = {style.sevenicon} src = {this.state.xLogos[2]}></img></td>
 						<td>{Math.round(this.state.xTemp[2])}<sup>o</sup>C</td>
 						<td>{this.state.xCond[2]}</td>
 					</tr>
 					<tr>
 						<td>{this.state.xDates[3]}</td>
-						<td><img src = {this.state.xLogos[3]}></img></td>
+						<td><img class = {style.sevenicon} src = {this.state.xLogos[3]}></img></td>
 						<td>{Math.round(this.state.xTemp[3])}<sup>o</sup>C</td>
 						<td>{this.state.xCond[3]}</td>
 					</tr>
 					<tr>
 						<td>{this.state.xDates[4]}</td>
-						<td><img src = {this.state.xLogos[4]}></img></td>
+						<td><img class = {style.sevenicon} src = {this.state.xLogos[4]}></img></td>
 						<td>{Math.round(this.state.xTemp[4])}<sup>o</sup>C</td>
 						<td>{this.state.xCond[4]}</td>
 					</tr>
 					<tr>
 						<td>{this.state.xDates[5]}</td>
-						<td><img src = {this.state.xLogos[5]}></img></td>
+						<td><img class = {style.sevenicon} src = {this.state.xLogos[5]}></img></td>
 						<td>{Math.round(this.state.xTemp[5])}<sup>o</sup>C</td>
 						<td>{this.state.xCond[5]}</td>
 					</tr>
 					<tr>
 						<td>{this.state.xDates[6]}</td>
-						<td><img src = {this.state.xLogos[6]}></img></td>
+						<td><img class = {style.sevenicon} src = {this.state.xLogos[6]}></img></td>
 						<td>{Math.round(this.state.xTemp[6])}<sup>o</sup>C</td>
 						<td>{this.state.xCond[6]}</td>
 					</tr>
 				</table>
 		</div>
+				}
+			</div>
+			
+			
 		)
 	}
 }
