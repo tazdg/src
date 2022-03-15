@@ -106,10 +106,10 @@ class MainWeather extends Component
 							<p class={style.sevenday}>See 7 Day Forecast</p>
 						</a>
 					</div> 
-					<div class ={style.boxR}>
-						<p class={style.loc}>Change Location</p>
+					<div >
 						<select class = {style.select} onChange={(e) => this.fetchSelected(e.target.value)}>
-							<option value="" disabled selected >Select A City</option>
+							<p>Change Location</p>
+							<option value="" disabled selected ><p>Change Location</p></option>
 							<option value="London">London</option>
 							<option value="Moscow">Moscow</option>
 							<option value="Paris">Paris</option>
@@ -247,10 +247,28 @@ class ChangeSport extends Component
 					<img class = {style.sevenIcon} src='../assets/icons/Untitled_Artwork_74.png'></img>
 					<p class={style.change}>Change Sport</p>
 				</div>
+
 			</div>
 		);
 	}
-}
+
+// 	search_animal() {
+// 		let input = document.getElementById('searchbar').value
+// 		input=input.toLowerCase();
+// 		let x = document.getElementsByClassName('animals');
+		  
+// 		for (i = 0; i < x.length; i++) { 
+// 			if (!x[i].innerHTML.toLowerCase().includes(input)) {
+// 				x[i].style.display="none";
+// 			}
+// 			else {
+// 				x[i].style.display="list-item";                 
+// 			}
+// 		}
+// 	}
+
+
+ }
 
 
 class SportData extends Component
