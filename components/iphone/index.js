@@ -86,8 +86,11 @@ class MainWeather extends Component
 				{
 				this.state.seeSeven ? <SevenDay Days = {this.state.Days} lon = {this.state.lon} lat = {this.state.lat} city = {this.state.Location}/> :
 					<div> {this.state.loading ? <div>loading</div>: 
-						<div class ={style.box}>
+						<div class ={style.box}>							
+							
+
 							<p class={style.appName}>Weathering With You</p>
+						
 							<p class = {style.today} >TODAY</p>
 							<p class = {style.locText}>{this.state.Location.toUpperCase()}</p>
 							<img class = {style.icon} src = {this.state.icon}></img>	
@@ -97,6 +100,9 @@ class MainWeather extends Component
 							<p class = {style.dayText}>{this.state.Days[this.state.day.getDay()]}</p>
 							<img class = {style.locIcon} src='../assets/icons/Untitled_Artwork_73.png'></img>
 							<p class = {style.cond}>{this.state.cond}</p>
+							<a href='#'>
+								<img onClick={() =>window.location.reload()} class = {style.refresh} src='../assets/icons/Untitled_Artwork_75.png'></img>
+							</a>
 							
 						</div>
 						}
