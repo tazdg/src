@@ -22,38 +22,47 @@ export default class Iphone extends Component {
 
 class MainWeather extends Component
 {
-	state = {
-		loading: true,
-		Location: null,
-		Temp: null,
-		tHigh: null,
-		tLow: null,
-		day: new Date(),
-		Days:["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
-		seeSeven: false,
-		icon: null,
-		lon:null,
-		lat:null,
-		cond: null,	
-		test: style.modalc
-	}
-
-	async componentWillMount()
+	constructor(props)
 	{
-		const url ="http://api.openweathermap.org/data/2.5/weather?q=London&units=metric&APPID=0da1480eba025d430229e68cef88a466"
-		const response = await fetch(url)
-		const data = await response.json();
-		this.setState({
-			Location: data.name,
-			Temp: Math.round(data.main.temp),
-			tHigh: Math.round(data.main.temp_max), 
-			tLow: Math.round(data.main.temp_min),
-			loading : false,
-			icon: "http://openweathermap.org/img/wn/" + data.weather[0].icon + "@2x.png",
-			lon : data.coord.lon,
-			lat : data.coord.lat,
-			cond: data.weather[0].description	
-		})
+		super(props)
+		if (this.props.Location === undefined)
+		{
+			this.setState ({
+			loading: true,
+			Location: null,
+			Temp: null,
+			tHigh: null,
+			tLow: null,
+			day: new Date(),
+			Days:["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+			seeSeven: false,
+			icon: null,
+			lon:null,
+			lat:null,
+			cond: null,	
+			test: style.modalc,
+			url: "http://api.openweathermap.org/data/2.5/weather?q=London&units=metric&APPID=0da1480eba025d430229e68cef88a466"
+			})				
+		}
+		else
+		{
+			this.setState ({
+				loading: true,
+				Location: this.props.Location,
+				Temp: null,
+				tHigh: null,
+				tLow: null,
+				day: new Date(),
+				Days:["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+				seeSeven: false,
+				icon: null,
+				lon:null,
+				lat:null,
+				cond: null,	
+				test: style.modalc,
+				url: "http://api.openweathermap.org/data/2.5/weather?q=" + this.props.Location + "&units=metric&APPID=0da1480eba025d430229e68cef88a466"
+				})	
+		}
 	}
 
 	addClass()
@@ -77,14 +86,13 @@ class MainWeather extends Component
 		})
 	}
 
-	async fetchSelected(city)
+	async componentWillMount()
 	{
-		const url ="http://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=metric&APPID=0da1480eba025d430229e68cef88a466"
-		const response = await fetch(url)
+		const response = await fetch(this.state.url)
 		const data = await response.json();
 		this.setState({
 			Location: data.name,
-			Temp: Math.round(data.main.temp),
+			Temp: data.main.temp,
 			tHigh: Math.round(data.main.temp_max), 
 			tLow: Math.round(data.main.temp_min),
 			loading : false,
@@ -93,6 +101,25 @@ class MainWeather extends Component
 			lat : data.coord.lat,
 			cond: data.weather[0].description	
 		})
+	}
+
+	async fetchSelected(city)
+	{	console.log(city)
+		const url ="http://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=metric&APPID=0da1480eba025d430229e68cef88a466"
+		const response = await fetch(url)
+		const data = await response.json();
+		this.setState({
+			Location: data.name,
+			Temp: data.main.temp,
+			tHigh: Math.round(data.main.temp_max), 
+			tLow: Math.round(data.main.temp_min),
+			loading : false,
+			icon: "http://openweathermap.org/img/wn/" + data.weather[0].icon + "@2x.png",
+			lon : data.coord.lon,
+			lat : data.coord.lat,
+			cond: data.weather[0].description	
+		})
+		console.log(data)
 	}
 	
 	render(){	
@@ -113,7 +140,7 @@ class MainWeather extends Component
 							<img class = {style.locIcon} src='../assets/icons/Untitled_Artwork_73.png'></img>
 							<p class = {style.cond}>{this.state.cond}</p>
 							<a href='#'>
-								<img onClick={() =>window.location.reload()} class = {style.refresh} src='../assets/icons/Untitled_Artwork_75.png'></img>
+								<img onClick={() => this.fetchSelected(this.state.Location)} class = {style.refresh} src='../assets/icons/Untitled_Artwork_75.png'></img>
 							</a>
 						</div>
 						}
@@ -137,7 +164,9 @@ class MainWeather extends Component
 						<div class = {style.modal}>
 							<input onChange={(e) => this.fetchSelected(e.target.value)} type="text" placeholder="Search.."/>
 							<br></br>
-							<button onClick = {()=>this.removeClass()}>Close</button>
+							<a href='#'>
+								<img class={style.exit} onClick = {()=>this.removeClass()} src='../assets/icons/x icon.png'></img>
+							</a>
 						</div>
 					</div>
 
@@ -212,13 +241,13 @@ class SevenDay extends Component
 		return(
 			<div>
 				{
-					this.state.back ? <MainWeather/> :<div class ={style.test}>
+					this.state.back ? <MainWeather Location = {this.state.city}/> :<div class ={style.test}>
 					
 					
 			<p class = {style.forecastCity}>
 				<a href='#'>
-					<img onClick={() =>this.setBack()} class = {style.ex} src='../assets/icons/Untitled_Artwork_75.png'></img>
-					</a>{this.state.city.toUpperCase()}
+					<img onClick={() =>this.setBack()} class = {style.ex} src='../assets/icons/back.png'></img>
+				</a>{this.state.city.toUpperCase()}
 			</p>
 
 				<table class = {style.forecast}>

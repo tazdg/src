@@ -24,14 +24,19 @@
 }
 
 .box {
-  background-color: rgba(0, 0, 0, 0.13);
+  background-color: rgba(0, 0, 0, 0.2);
   color: #fff;
   border-radius: 1.5em;
   width: 23em;
   height: 13em;
   margin-top: -5em;
-  transition: ease-in-out 0.5s;
+  transition: ease-in-out 1s;
   margin-left: 1.5em;
+}
+
+.box:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+  transition: ease-in 1s;
 }
 
 .box1 {
@@ -42,6 +47,12 @@
   height: 6.5em;
   margin-top: 1em;
   margin-left: 1.5em;
+  transition: ease-in 1s;
+}
+
+.box1:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+  transition: ease-in-out 1s;
 }
 
 .boxL {
@@ -59,10 +70,12 @@
   color: #fff;
   border-radius: 1.5em;
   width: 13em;
-  height: 7.5em;
+  height: 7.8em;
   margin-top: 1em;
-  margin-left: 13.5em;
+  margin-left: 14em;
   border: none;
+  transition: ease-in 1s;
+  cursor: pointer;
 }
 
 .lbut {
@@ -70,6 +83,11 @@
   font-size: 2em;
   margin-top: 0.7em;
   margin-left: 1em;
+}
+
+.boxR:hover {
+  background: rgba(0, 0, 0, 0.5);
+  transition: ease-in 1s;
 }
 
 .lbutI {
@@ -210,6 +228,13 @@ a {
 .forecast {
   margin-left: 2.4em;
   margin-top: 2em;
+  transition: ease-in 1s;
+}
+
+.forecast:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+
+  transition: ease-in 1s;
 }
 
 .forecastCity {
@@ -239,8 +264,8 @@ table {
 }
 
 .ex {
-  width: 1.5em;
-  height: 1.5em;
+  width: 1em;
+  height: 1em;
   margin-left: -5em;
   margin-top: -0.1em;
   position: absolute;
@@ -256,11 +281,19 @@ table {
   opacity: 0;
   position: fixed;
   width: 414px;
-  height: 736px;
+  height: 738px;
   pointer-events: none;
   margin-top: -28.9em;
 }
 
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
 .modalc.show {
   opacity: 1;
   pointer-events: all;
@@ -274,6 +307,7 @@ table {
   height: 736px;
   position: fixed;
   margin-top: -28.5em;
+  animation: fadein 2s;
 }
 
 input[type="text"] {
@@ -285,4 +319,19 @@ input[type="text"] {
   border: none;
   outline: none;
   background-color: rgb(255, 255, 255);
+  color: rgb(54, 53, 53);
+  text-align: center;
+  transition: ease-in 1s;
+}
+
+input[type="text"]:focus {
+  transition: ease-in 1s;
+  background-color: rgb(54, 53, 53);
+  color: #fff;
+}
+
+.exit {
+  margin-top: 1em;
+  height: 2em;
+  width: 2em;
 }
