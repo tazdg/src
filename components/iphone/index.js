@@ -19,6 +19,7 @@ export default class Iphone extends Component {
 	}
 }
 
+
 class MainWeather extends Component
 {
 	state = {
@@ -33,14 +34,8 @@ class MainWeather extends Component
 		icon: null,
 		lon:null,
 		lat:null,
-		cond: null	
-	}
-
-	setSeven()
-	{
-		this.setState({
-			seeSeven:true
-		})
+		cond: null,	
+		test: style.modalc
 	}
 
 	async componentWillMount()
@@ -61,6 +56,27 @@ class MainWeather extends Component
 		})
 	}
 
+	addClass()
+	{
+		this.setState({
+			test:style.modalc.show
+		})
+	}
+
+	removeClass()
+	{
+		this.setState({
+			test:style.modalc
+		})
+	}
+	
+	setSeven()
+	{
+		this.setState({
+			seeSeven:true
+		})
+	}
+
 	async fetchSelected(city)
 	{
 		const url ="http://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=metric&APPID=0da1480eba025d430229e68cef88a466"
@@ -78,7 +94,7 @@ class MainWeather extends Component
 			cond: data.weather[0].description	
 		})
 	}
-
+	
 	render(){	
 		return( 
 			<div>
@@ -86,10 +102,7 @@ class MainWeather extends Component
 				this.state.seeSeven ? <SevenDay Days = {this.state.Days} lon = {this.state.lon} lat = {this.state.lat} city = {this.state.Location}/> :
 					<div> {this.state.loading ? <div>loading</div>: 
 						<div class ={style.box}>							
-							
-
 							<p class={style.appName}>Weathering With You</p>
-						
 							<p class = {style.today} >TODAY</p>
 							<p class = {style.locText}>{this.state.Location.toUpperCase()}</p>
 							<img class = {style.icon} src = {this.state.icon}></img>	
@@ -102,28 +115,36 @@ class MainWeather extends Component
 							<a href='#'>
 								<img onClick={() =>window.location.reload()} class = {style.refresh} src='../assets/icons/Untitled_Artwork_75.png'></img>
 							</a>
-							
 						</div>
 						}
+
+
 					<div class ={style.box1}>
 						<a href = "#" onClick={() =>this.setSeven()}>
 							<img class = {style.sevenIcon} src='../assets/icons/Untitled_Artwork_70.png'></img>
 							<p class={style.sevenday}>See 7 Day Forecast</p>
 						</a>
 					</div> 
-					<div class ={style.boxR}>
-						<p class={style.loc}>Change Location</p>
-						<select class = {style.select} onChange={(e) => this.fetchSelected(e.target.value)}>
-							<option value="" disabled selected >Select A City</option>
-							<option value="London">London</option>
-							<option value="Moscow">Moscow</option>
-							<option value="Paris">Paris</option>
-							<option value="Sydney">Sydney</option>
-							<option value="Kyiv">Kyiv</option>
-						</select>
+
+					
+					<button class ={style.boxR} onClick = {() => this.addClass()}>
+						<p class ={style.lbut}>Change Location</p>
+						<img class ={style.lbutI} src='../assets/icons/Untitled_Artwork_73.png'></img>
+					</button>
+
+
+					<div class = {this.state.test}>
+						<div class = {style.modal}>
+							<input onChange={(e) => this.fetchSelected(e.target.value)} type="text" placeholder="Search.."/>
+							<br></br>
+							<button onClick = {()=>this.removeClass()}>Close</button>
+						</div>
 					</div>
+
+
 					<ChangeSport/>
 					<SportData/>
+
 				</div>
 				}
 			</div>
@@ -131,10 +152,9 @@ class MainWeather extends Component
 	}
 }
 
+
 class SevenDay extends Component
 {
-	// http://api.openweathermap.org/data/2.5/weather?q=London&units=metric&APPID=0da1480eba025d430229e68cef88a466
-	// https://api.openweathermap.org/data/2.5/onecall?lat=-0.1257&lon=51.5085&exclude=hourly&appid=0da1480eba025d430229e68cef88a466&units=metric
 	constructor(props)
 	{
 		super(props);
@@ -187,7 +207,6 @@ class SevenDay extends Component
 		})
 	}
 
-
 	render()
 	{
 		return(
@@ -195,8 +214,13 @@ class SevenDay extends Component
 				{
 					this.state.back ? <MainWeather/> :<div class ={style.test}>
 					
-					<a href='#'><img onClick={() =>this.setBack()} class = {style.ex} src='../assets/icons/Untitled_Artwork_75.png'></img></a>
-			<p class = {style.forecastCity}>{this.state.city.toUpperCase()}</p>
+					
+			<p class = {style.forecastCity}>
+				<a href='#'>
+					<img onClick={() =>this.setBack()} class = {style.ex} src='../assets/icons/Untitled_Artwork_75.png'></img>
+					</a>{this.state.city.toUpperCase()}
+			</p>
+
 				<table class = {style.forecast}>
 					<tr>
 						<td>{this.state.xDates[0]}</td>
@@ -244,11 +268,10 @@ class SevenDay extends Component
 		</div>
 				}
 			</div>
-			
-			
 		)
 	}
 }
+
 
 class ChangeSport extends Component
 {
