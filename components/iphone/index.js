@@ -7,6 +7,22 @@ import styleI from './style'
 import regeneratorRuntime from "regenerator-runtime";
 
 
+
+//TAZ
+
+
+// import data from './data.json'
+
+
+// render(
+// 	<searchBar data={data} placeholder="Change sport"></searchBar>
+
+// );
+
+
+
+//TAZ
+
 export default class Iphone extends Component {
 
 	render()
@@ -252,20 +268,7 @@ class ChangeSport extends Component
 		);
 	}
 
-// 	search_animal() {
-// 		let input = document.getElementById('searchbar').value
-// 		input=input.toLowerCase();
-// 		let x = document.getElementsByClassName('animals');
-		  
-// 		for (i = 0; i < x.length; i++) { 
-// 			if (!x[i].innerHTML.toLowerCase().includes(input)) {
-// 				x[i].style.display="none";
-// 			}
-// 			else {
-// 				x[i].style.display="list-item";                 
-// 			}
-// 		}
-// 	}
+
 
 
  }
