@@ -59,10 +59,14 @@
   background-color: rgba(0, 0, 0, 0.2);
   color: #fff;
   border-radius: 1.5em;
-  width: 11em;
-  height: 6.5em;
-  margin-top: -6.5em;
-  margin-left: 1.5em;
+  width: 13em;
+  height: 7.8em;
+  margin-top: -9.3em;
+  margin-left: -13.5em;
+  border: none;
+  transition: ease-in 1s;
+  cursor: pointer;
+  position: fixed;
 }
 
 .boxR {
@@ -90,6 +94,11 @@
   transition: ease-in 1s;
 }
 
+.boxL:hover {
+  background: rgba(0, 0, 0, 0.5);
+  transition: ease-in 1s;
+}
+
 .lbutI {
   position: absolute;
   margin-top: -8.5em;
@@ -106,6 +115,12 @@
   height: 14.5em;
   margin-top: 1em;
   margin-left: 1.5em;
+  transition: ease-in 1s;
+}
+
+.boxBottom:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+  transition: ease-in 1s;
 }
 
 .appName {
@@ -253,6 +268,7 @@ table {
 
 .test {
   margin-left: -0.9em;
+  margin-top: 2em;
 }
 
 .refresh {
@@ -282,21 +298,18 @@ table {
   position: fixed;
   width: 414px;
   height: 738px;
+  padding-top: 80px;
+
   pointer-events: none;
-  margin-top: -28.9em;
+  margin-top: -20em;
+  transition: ease-in 2s;
+  z-index: 100;
 }
 
-@keyframes fadein {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
 .modalc.show {
   opacity: 1;
   pointer-events: all;
+  z-index: 100;
 }
 
 .modal {
@@ -304,12 +317,23 @@ table {
   text-align: center;
   max-width: 100%;
   width: 414px;
-  height: 736px;
+  height: 737px;
   position: fixed;
-  margin-top: -28.5em;
-  animation: fadein 2s;
+  margin-top: -28.8em;
+  z-index: 100;
 }
 
+.modal2 {
+  background-color: rgba(0, 0, 0, 0.6);
+  text-align: center;
+  max-width: 100%;
+  width: 414px;
+  height: 736px;
+  position: fixed;
+  margin-top: -30em;
+
+  z-index: 100;
+}
 input[type="text"] {
   margin-top: 338px;
   height: 3em;
@@ -334,4 +358,51 @@ input[type="text"]:focus {
   margin-top: 1em;
   height: 2em;
   width: 2em;
+}
+
+.SL {
+  margin-top: 300px;
+  list-style-type: none;
+  margin-left: 4.5em;
+  text-align: center;
+}
+
+.SL li {
+  border-bottom: 1px solid white;
+  margin-bottom: 2em;
+  width: 12em;
+  height: 2em;
+  transition: ease-in 1s;
+}
+
+.SL li:hover {
+  background-color: rgba(0, 0, 0, 0.6);
+  transition: ease-in 1s;
+  cursor: pointer;
+}
+
+.sporthead {
+  padding-top: 2em;
+}
+
+.Humidity {
+  margin-left: 7.7em;
+  margin-top: -6em;
+}
+.HumidityPerc {
+  margin-top: -0.3em;
+  margin-left: 6.7em;
+  font-weight: bold;
+  font-size: 2em;
+  position: absolute;
+}
+.feelsLike {
+  margin-right: 8em;
+}
+
+.feelsLikeTemp {
+  margin-top: -0.4em;
+  margin-right: 4em;
+  font-weight: bold;
+  font-size: 2em;
 }
