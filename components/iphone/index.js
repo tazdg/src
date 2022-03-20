@@ -8,6 +8,12 @@ import styleI from "./style";
 //needed for async functions
 import regeneratorRuntime from "regenerator-runtime";
 
+// imports for autocomplete
+import { Autocomplete } from 'preact-autocomplete'; // From https://github.com/jimmy1217/React-AutoComplete
+// Line below is importing list of locations from locations.js
+import { Locations } from "./locations.js"
+
+
 export default class Iphone extends Component {
   render() {
     return (
@@ -216,11 +222,7 @@ class MainWeather extends Component {
             </button>
             <div class={this.state.test}>
               <div class={style.modal}>
-                <input
-                  onChange={(e) => this.fetchSelected(e.target.value)}
-                  type="text"
-                  placeholder="Search.."
-                />
+                <Autocomplete class={style.test1} data={Locations} placeholder="Search..." emptyText="Location Not Found" onChange={(e) => this.fetchSelected(e)} />
                 <br></br>
                 <a href="#">
                   <img
