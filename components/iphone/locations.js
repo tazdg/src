@@ -1,5 +1,23 @@
 export const Locations = {
+  ankara: { name: "Ankara" },
+  athens: { name: "Athens" },
+  bangkok: { name: "Bangkok" },
+  beijing: { name: "Beijing" },
+  beirut: { name: "Beirut" },
+  berlin: { name: "Berlin"},
+  brussels: { name: "Brussels" },
+  cairo: { name: "Cairo" },
+  dublin: { name: "Dublin" },
+  doha: { name: "Doha" },
+  lahore: { name: "Lahore"},
+  jakarta: { name: "Jakarta"},
+  kampala: { name: "Kampala"},
+  kigali: { name: "Kigali"},
+  lisbon: { name: "Lisbon"},
   london: { name: "London" },
   paris: { name: "Paris" },
-  tokyo: { name: "Tokyo"}
+  moscow: { name : "Moscow"},
+  mumbai: { name: "Mumbai"},
+  tokyo: { name: "Tokyo"},
+  seoul: { name: "Seoul"}
 };

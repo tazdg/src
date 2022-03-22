@@ -12,6 +12,7 @@ import regeneratorRuntime from "regenerator-runtime";
 import { Autocomplete } from 'preact-autocomplete'; // From https://github.com/jimmy1217/React-AutoComplete
 // Line below is importing list of locations from locations.js
 import { Locations } from "./locations.js"
+import { Sports } from "./sports";
 
 
 export default class Iphone extends Component {
@@ -212,6 +213,7 @@ class MainWeather extends Component {
                 <p class={style.sevenday}>See 7 Day Forecast</p>
               </a>
             </div>
+			
             {/* Displaying change location box on RHS below 7 day forecast box */}
             <button class={style.boxR} onClick={() => this.addClass()}>
               <p class={style.lbut}>Change Location</p>
@@ -458,7 +460,7 @@ class ChangeSport extends Component {
           </button>
         </div>
         {/* //modal contents for selecting a sport */}
-        <div class={this.state.test}>
+        {/* <div class={this.state.test}>
           <div class={style.modal2}>
             <ul class={style.SL}>
 
@@ -483,9 +485,24 @@ class ChangeSport extends Component {
               ></img>
             </a>
           </div>
+        </div> */}
+
+{/* CHANGED TODAY BY TAZ */}
+		<div class={this.state.test}>
+              <div class={style.modal2}>
+                <Autocomplete class={style.test1} data={Sports} placeholder="Search..." emptyText="Sport Not Found" onChange={(e) => this.fetchSelected(e)} />
+                <br></br>
+                <a href="#">
+                  <img
+                    class={style.exit}
+                    onClick={() => this.removeClass()}
+                    src="../assets/icons/x icon.png"
+                  ></img>
+                </a>
+              </div>
         </div>
         {/* // Display of sport data box at the bottom of the page */}
-        <SportData sport={this.state.sport} location={this.props.location} />
+        <SportData sport={this.state.sport} />
       </div>
     );
   }
@@ -545,6 +562,7 @@ class SportData extends Component {
   }
   render() {
     // conditional rendering of information depending on what sport has been selected
+
     if (this.state.sport === "") {
       return (
         <div>
@@ -561,13 +579,18 @@ class SportData extends Component {
               Displaying Weather Info For: {this.state.sport}
             </p>
 
-            <p class={style.feelsLike}>Feels Like</p>
-            <p class={style.feelsLikeTemp}>
-              {this.state.feels}
-              <sup>o</sup>C
-            </p>
-            <p class={style.Humidity}>Humidity </p>
-            <p class={style.HumidityPerc}>{this.state.humidity}%</p>
+			<div class={style.weatherDisplayLeft}>
+				<p class={style.metricHeader}>Feels Like</p>
+				<p class={style.metricValue}>
+				{this.state.feels}
+				<sup>o</sup>C
+				</p>
+			</div>
+
+			<div class={style.weatherDisplayRight}>
+				<p class={style.metricHeader}>Humidity </p>
+				<p class={style.metricValue}>{this.state.humidity}%</p>
+			</div>
           </div>
         </div>
       );
@@ -579,9 +602,18 @@ class SportData extends Component {
               Displaying Weather Info For: {this.state.sport}
             </p>
 
-            <p> wind speed: {this.state.wind}m/s</p>
+			<div class={style.weatherDisplayLeft}>
+					<p class={style.metricHeader}> Wind Speed:</p>
+					<p class={style.metricValue}>{this.state.wind}m/s</p>
+					<p class={style.metricHeader}> Wind Direction:</p>
+					<p class={style.metricValue}>{this.state.rain}m/s</p>
 
-            <p>visibility: {this.state.vis}km</p>
+			</div>
+
+			<div class={style.weatherDisplayRight}>
+				<p class={style.metricHeader}> Visability:</p>
+				<p class={style.metricValue}>{this.state.vis}km</p>
+			</div>
           </div>
         </div>
       );
