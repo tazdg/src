@@ -461,15 +461,18 @@ class ChangeSport extends Component {
         <div class={this.state.test}>
           <div class={style.modal2}>
             <ul class={style.SL}>
+
+				<li onClick={(e) => this.changeSport(e.target.id)} id="Cycling">
+					Cycling
+				</li>
               <li onClick={(e) => this.changeSport(e.target.id)} id="Golf">
                 Golf
               </li>
               <li
-                onClick={(e) => this.changeSport(e.target.id)}
-                id={"Football"}
-              >
+                onClick={(e) => this.changeSport(e.target.id)} id={"Football"}>
                 Football
               </li>
+
             </ul>
             <br></br>
             <a href="#">
@@ -510,13 +513,22 @@ class SportData extends Component {
           wind: data.wind.speed,
           vis: data.visibility / 1000,
         });
-        // pull relevant football data "feels like" and "humidity"
-      } else if (this.state.sport === "Football") {
+         } 
+	  // pull relevant football data "feels like" and "humidity"
+	  else if (this.state.sport === "Football") {
         this.setState({
           feels: data.main.feels_like,
           humidity: data.main.humidity,
         });
-      }
+		}
+
+		else if (this.state.sport === "Cycling"){
+		this.setState({
+			feels: data.main.feels_like,
+			humidity: data.main.humidity,
+		});
+        }
+
     }
   }
 
@@ -548,6 +560,7 @@ class SportData extends Component {
             <p class={style.sporthead}>
               Displaying Weather Info For: {this.state.sport}
             </p>
+
             <p class={style.feelsLike}>Feels Like</p>
             <p class={style.feelsLikeTemp}>
               {this.state.feels}
@@ -565,11 +578,33 @@ class SportData extends Component {
             <p class={style.sporthead}>
               Displaying Weather Info For: {this.state.sport}
             </p>
+
             <p> wind speed: {this.state.wind}m/s</p>
+
             <p>visibility: {this.state.vis}km</p>
           </div>
         </div>
       );
-    }
+    } else if (this.state.sport === "Cycling"){
+		return(
+			<div>
+			<div class={style.boxBottom}>
+				<p class={style.sporthead}>
+				Displaying Weather Info For: {this.state.sport}
+				</p>
+				<div class={style.weatherDisplayLeft}>
+					<p class={style.metricHeader}> Wind Speed:</p>
+					<p class={style.metricValue}>{this.state.wind}m/s</p>
+				</div>
+
+				<div class={style.weatherDisplayRight}>
+					<p class={style.metricHeader}> Visability:</p>
+					<p class={style.metricValue}>{this.state.vis}km</p>
+				</div>
+			</div>
+			</div>
+		
+		);
+	}
   }
 }
