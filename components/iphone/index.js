@@ -501,8 +501,10 @@ class ChangeSport extends Component {
                 </a>
               </div>
         </div>
+
         {/* // Display of sport data box at the bottom of the page */}
         <SportData sport={this.state.sport} />
+		
       </div>
     );
   }
