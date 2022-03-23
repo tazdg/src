@@ -12,6 +12,7 @@ import regeneratorRuntime from "regenerator-runtime";
 import { Autocomplete } from "preact-autocomplete"; // From https://github.com/jimmy1217/React-AutoComplete
 // Line below is importing list of locations from locations.js
 import { Sports } from "./sports";
+import PreactCompat from "preact-compat";
 
 export default class Iphone extends Component {
 	render() {
@@ -53,7 +54,14 @@ class MainWeather extends Component {
 				lat: null,
 				cond: null,
 				test: style.modalc,
-				url: "http://api.openweathermap.org/data/2.5/weather?q=London&units=metric&APPID=0da1480eba025d430229e68cef88a466",
+				units: "metric",
+				lastUpdated: new Date().toLocaleTimeString(),
+			});
+			this.setState({
+				url:
+					"http://api.openweathermap.org/data/2.5/weather?q=London&units=" +
+					this.state.units +
+					"&APPID=0da1480eba025d430229e68cef88a466",
 			});
 		} else {
 			this.setState({
@@ -81,7 +89,11 @@ class MainWeather extends Component {
 				url:
 					"http://api.openweathermap.org/data/2.5/weather?q=" +
 					this.props.Location +
-					"&units=metric&APPID=0da1480eba025d430229e68cef88a466",
+					"&units=" +
+					this.props.units +
+					"&APPID=0da1480eba025d430229e68cef88a466",
+				lastUpdated: this.props.lastUpdated,
+				units: this.props.units,
 			});
 		}
 	}
@@ -107,6 +119,20 @@ class MainWeather extends Component {
 		});
 	}
 
+	changeUnit() {
+		if (this.state.units == "metric") {
+			this.setState({
+				units: "imperial",
+			});
+			this.fetchSelected(this.state.Location);
+		} else {
+			this.setState({
+				units: "metric",
+			});
+			this.fetchSelected(this.state.Location);
+		}
+	}
+
 	// function which pulls initial data for top box before page loads default -> London via API url stored in the "url" state variable
 	async componentWillMount() {
 		const response = await fetch(this.state.url);
@@ -122,6 +148,7 @@ class MainWeather extends Component {
 			lon: data.coord.lon,
 			lat: data.coord.lat,
 			cond: data.weather[0].description,
+			lastUpdated: new Date().toLocaleTimeString(),
 		});
 	}
 
@@ -130,7 +157,9 @@ class MainWeather extends Component {
 		const url =
 			"http://api.openweathermap.org/data/2.5/weather?q=" +
 			city +
-			"&units=metric&APPID=0da1480eba025d430229e68cef88a466";
+			"&units=" +
+			this.state.units +
+			"&APPID=0da1480eba025d430229e68cef88a466";
 		const response = await fetch(url);
 		const data = await response.json();
 		this.setState({
@@ -144,6 +173,7 @@ class MainWeather extends Component {
 			lon: data.coord.lon,
 			lat: data.coord.lat,
 			cond: data.weather[0].description,
+			lastUpdated: new Date().toLocaleTimeString(),
 		});
 	}
 
@@ -157,6 +187,8 @@ class MainWeather extends Component {
 						lon={this.state.lon}
 						lat={this.state.lat}
 						city={this.state.Location}
+						lastUpdated={this.state.lastUpdated}
+						units={this.state.units}
 					/>
 				) : (
 					<div>
@@ -167,14 +199,40 @@ class MainWeather extends Component {
 							</div>
 						) : (
 							// Displaying of information for the top most box
+
 							<div class={style.box}>
+								<label class={style.switch}>
+									<input onChange={() => this.changeUnit()} type="checkbox" />
+									<span class={style.slider}></span>
+								</label>
+								<p class={style.unit}>
+									{" "}
+									{this.state.units === "metric" ? (
+										<PreactCompat.Fragment>MET</PreactCompat.Fragment>
+									) : (
+										<PreactCompat.Fragment>IMP</PreactCompat.Fragment>
+									)}
+								</p>
+
 								<p class={style.appName}>Weathering With You</p>
+								<p class={style.lastUpdated}>
+									Last Updated: {this.state.lastUpdated}
+								</p>
 								<p class={style.today}>TODAY</p>
 								<p class={style.locText}>{this.state.Location.toUpperCase()}</p>
 								<img class={style.icon} src={this.state.icon}></img>
 								<p class={style.tempText}>
 									{this.state.Temp}
-									<sup>o</sup>C
+									{/* Check the units and display cprrect symbol */}
+									{this.state.units === "metric" ? (
+										<PreactCompat.Fragment>
+											<sup>o</sup>C
+										</PreactCompat.Fragment>
+									) : (
+										<PreactCompat.Fragment>
+											<sup>o</sup>F
+										</PreactCompat.Fragment>
+									)}
 								</p>
 								<p class={style.HiLoText}>
 									Low {this.state.tLow}
@@ -238,7 +296,10 @@ class MainWeather extends Component {
 						</div>
 						{/*  Displaying change sport component which shows the change sport
             button and bottom box that holds specific sport information */}
-						<ChangeSport location={this.state.Location} />
+						<ChangeSport
+							location={this.state.Location}
+							units={this.state.units}
+						/>
 					</div>
 				)}
 			</div>
@@ -255,6 +316,7 @@ class SevenDay extends Component {
 			lat: this.props.lat,
 			city: this.props.city,
 			Days: this.props.Days,
+			units: this.props.units,
 			//initialising arrays to hold information about the upcoming days
 			xDates: new Array(7),
 			xLogos: new Array(7),
@@ -283,24 +345,26 @@ class SevenDay extends Component {
 			this.state.lat +
 			"&lon=" +
 			this.state.lon +
-			"&exclude=hourly&appid=0da1480eba025d430229e68cef88a466&units=metric";
+			"&exclude=hourly&appid=0da1480eba025d430229e68cef88a466&units=" +
+			this.state.units +
+			"";
 		const response = await fetch(url);
 		const data = await response.json();
 
 		//populating the arrays with information about upcoming days from API JSON response
-		for (let i = 0; i <= 6; i++) {
-			Dates[i] =
+		for (let i = 1; i <= 7; i++) {
+			Dates[i - 1] =
 				this.state.Days[
 					new Date(
 						data.daily[i].dt * 1000 - data.timezone_offset * 1000
 					).getDay()
 				];
-			Logos[i] =
+			Logos[i - 1] =
 				"http://openweathermap.org/img/wn/" +
-				data.daily[i].weather[0].icon +
+				data.daily[i - 1].weather[0].icon +
 				"@2x.png";
-			Temp[i] = data.daily[i].temp.day;
-			Cond[i] = data.daily[i].weather[0].description;
+			Temp[i - 1] = data.daily[i - 1].temp.day;
+			Cond[i - 1] = data.daily[i - 1].weather[0].description;
 		}
 
 		this.setState({
@@ -316,7 +380,11 @@ class SevenDay extends Component {
 			<div>
 				{/* //checking if back button has been clicked, If not then display information about upcoming days In a tabulated format */}
 				{this.state.back ? (
-					<MainWeather Location={this.state.city} />
+					<MainWeather
+						Location={this.state.city}
+						lastUpdated={this.props.lastUpdated}
+						units={this.state.units}
+					/>
 				) : (
 					<div class={style.test}>
 						<p class={style.forecastCity}>
@@ -338,7 +406,15 @@ class SevenDay extends Component {
 								</td>
 								<td>
 									{Math.round(this.state.xTemp[0])}
-									<sup>o</sup>C
+									{this.state.units === "metric" ? (
+										<PreactCompat.Fragment>
+											<sup>o</sup>C
+										</PreactCompat.Fragment>
+									) : (
+										<PreactCompat.Fragment>
+											<sup>o</sup>F
+										</PreactCompat.Fragment>
+									)}
 								</td>
 								<td>{this.state.xCond[0]}</td>
 							</tr>
@@ -349,7 +425,15 @@ class SevenDay extends Component {
 								</td>
 								<td>
 									{Math.round(this.state.xTemp[1])}
-									<sup>o</sup>C
+									{this.state.units === "metric" ? (
+										<PreactCompat.Fragment>
+											<sup>o</sup>C
+										</PreactCompat.Fragment>
+									) : (
+										<PreactCompat.Fragment>
+											<sup>o</sup>F
+										</PreactCompat.Fragment>
+									)}
 								</td>
 								<td>{this.state.xCond[1]}</td>
 							</tr>
@@ -360,7 +444,15 @@ class SevenDay extends Component {
 								</td>
 								<td>
 									{Math.round(this.state.xTemp[2])}
-									<sup>o</sup>C
+									{this.state.units === "metric" ? (
+										<PreactCompat.Fragment>
+											<sup>o</sup>C
+										</PreactCompat.Fragment>
+									) : (
+										<PreactCompat.Fragment>
+											<sup>o</sup>F
+										</PreactCompat.Fragment>
+									)}
 								</td>
 								<td>{this.state.xCond[2]}</td>
 							</tr>
@@ -371,7 +463,15 @@ class SevenDay extends Component {
 								</td>
 								<td>
 									{Math.round(this.state.xTemp[3])}
-									<sup>o</sup>C
+									{this.state.units === "metric" ? (
+										<PreactCompat.Fragment>
+											<sup>o</sup>C
+										</PreactCompat.Fragment>
+									) : (
+										<PreactCompat.Fragment>
+											<sup>o</sup>F
+										</PreactCompat.Fragment>
+									)}
 								</td>
 								<td>{this.state.xCond[3]}</td>
 							</tr>
@@ -382,7 +482,15 @@ class SevenDay extends Component {
 								</td>
 								<td>
 									{Math.round(this.state.xTemp[4])}
-									<sup>o</sup>C
+									{this.state.units === "metric" ? (
+										<PreactCompat.Fragment>
+											<sup>o</sup>C
+										</PreactCompat.Fragment>
+									) : (
+										<PreactCompat.Fragment>
+											<sup>o</sup>F
+										</PreactCompat.Fragment>
+									)}
 								</td>
 								<td>{this.state.xCond[4]}</td>
 							</tr>
@@ -393,7 +501,15 @@ class SevenDay extends Component {
 								</td>
 								<td>
 									{Math.round(this.state.xTemp[5])}
-									<sup>o</sup>C
+									{this.state.units === "metric" ? (
+										<PreactCompat.Fragment>
+											<sup>o</sup>C
+										</PreactCompat.Fragment>
+									) : (
+										<PreactCompat.Fragment>
+											<sup>o</sup>F
+										</PreactCompat.Fragment>
+									)}
 								</td>
 								<td>{this.state.xCond[5]}</td>
 							</tr>
@@ -404,7 +520,15 @@ class SevenDay extends Component {
 								</td>
 								<td>
 									{Math.round(this.state.xTemp[6])}
-									<sup>o</sup>C
+									{this.state.units === "metric" ? (
+										<PreactCompat.Fragment>
+											<sup>o</sup>C
+										</PreactCompat.Fragment>
+									) : (
+										<PreactCompat.Fragment>
+											<sup>o</sup>F
+										</PreactCompat.Fragment>
+									)}
 								</td>
 								<td>{this.state.xCond[6]}</td>
 							</tr>
@@ -510,7 +634,11 @@ class ChangeSport extends Component {
 				</div>
 
 				{/* // Display of sport data box at the bottom of the page */}
-				<SportData sport={this.state.sport} location={this.props.location} />
+				<SportData
+					sport={this.state.sport}
+					location={this.props.location}
+					units={this.props.units}
+				/>
 			</div>
 		);
 	}
@@ -529,7 +657,16 @@ class SportData extends Component {
 
 	// function that pulls relevant information for a sport when a different sport from the current one is chosen
 	async componentDidUpdate(prevProps) {
-		if (prevProps.sport !== this.props.sport) {
+		if (prevProps.sport !== this.props.sport)
+			this.setState({
+				url:
+					"http://api.openweathermap.org/data/2.5/weather?q=" +
+					this.state.location +
+					"&units=" +
+					this.state.units +
+					"&APPID=0da1480eba025d430229e68cef88a466",
+			});
+		{
 			const response = await fetch(this.state.url);
 			const data = await response.json();
 			// pull relevant golf data "windspeed" and "visibility"
@@ -559,15 +696,17 @@ class SportData extends Component {
 		this.setState({
 			sport: nextProps.sport,
 			location: nextProps.location,
+			units: nextProps.units,
 			url:
 				"http://api.openweathermap.org/data/2.5/weather?q=" +
 				this.state.location +
-				"&units=metric&APPID=0da1480eba025d430229e68cef88a466",
+				"&units=" +
+				nextProps.units +
+				"&APPID=0da1480eba025d430229e68cef88a466",
 		});
 	}
 	render() {
 		// conditional rendering of information depending on what sport has been selected
-
 		if (this.state.sport === "") {
 			return (
 				<div>
@@ -588,7 +727,17 @@ class SportData extends Component {
 							<p class={style.metricHeader}>Feels Like</p>
 							<p class={style.metricValue}>
 								{this.state.feels}
-								<sup>o</sup>C
+								{/* Checks if units is metric, if so display Celcius else Farenheight. Same logic here
+								can be used for displaying the units for another sport. */}
+								{this.state.units === "metric" ? (
+									<PreactCompat.Fragment>
+										<sup>o</sup>C
+									</PreactCompat.Fragment>
+								) : (
+									<PreactCompat.Fragment>
+										<sup>o</sup>F
+									</PreactCompat.Fragment>
+								)}
 							</p>
 						</div>
 
@@ -615,7 +764,7 @@ class SportData extends Component {
 						</div>
 
 						<div class={style.weatherDisplayRight}>
-							<p class={style.metricHeader}> Visability:</p>
+							<p class={style.metricHeader}> Visibility:</p>
 							<p class={style.metricValue}>{this.state.vis}km</p>
 						</div>
 					</div>
@@ -634,7 +783,7 @@ class SportData extends Component {
 						</div>
 
 						<div class={style.weatherDisplayRight}>
-							<p class={style.metricHeader}> Visability:</p>
+							<p class={style.metricHeader}> Visibility:</p>
 							<p class={style.metricValue}>{this.state.vis}km</p>
 						</div>
 					</div>
