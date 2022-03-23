@@ -61,7 +61,7 @@ class MainWeather extends Component {
 				url:
 					"http://api.openweathermap.org/data/2.5/weather?q=London&units=" +
 					this.state.units +
-					"&APPID=0da1480eba025d430229e68cef88a466",
+					"&APPID=bf70994fbd262220efa80210e99b4208",
 			});
 		} else {
 			this.setState({
@@ -91,7 +91,7 @@ class MainWeather extends Component {
 					this.props.Location +
 					"&units=" +
 					this.props.units +
-					"&APPID=0da1480eba025d430229e68cef88a466",
+					"&APPID=bf70994fbd262220efa80210e99b4208",
 				lastUpdated: this.props.lastUpdated,
 				units: this.props.units,
 			});
@@ -159,7 +159,7 @@ class MainWeather extends Component {
 			city +
 			"&units=" +
 			this.state.units +
-			"&APPID=0da1480eba025d430229e68cef88a466";
+			"&APPID=bf70994fbd262220efa80210e99b4208";
 		const response = await fetch(url);
 		const data = await response.json();
 		this.setState({
@@ -339,13 +339,12 @@ class SevenDay extends Component {
 		let Logos = new Array(7);
 		let Temp = new Array(7);
 		let Cond = new Array(7);
-
 		const url =
 			"https://api.openweathermap.org/data/2.5/onecall?lat=" +
 			this.state.lat +
 			"&lon=" +
 			this.state.lon +
-			"&exclude=hourly&appid=0da1480eba025d430229e68cef88a466&units=" +
+			"&exclude=hourly&appid=bf70994fbd262220efa80210e99b4208&units=" +
 			this.state.units +
 			"";
 		const response = await fetch(url);
@@ -657,36 +656,41 @@ class SportData extends Component {
 
 	// function that pulls relevant information for a sport when a different sport from the current one is chosen
 	async componentDidUpdate(prevProps) {
-		if (prevProps.sport !== this.props.sport)
-			this.setState({
-				url:
-					"http://api.openweathermap.org/data/2.5/weather?q=" +
-					this.state.location +
-					"&units=" +
-					this.state.units +
-					"&APPID=0da1480eba025d430229e68cef88a466",
-			});
-		{
-			const response = await fetch(this.state.url);
-			const data = await response.json();
-			// pull relevant golf data "windspeed" and "visibility"
-			if (this.state.sport === "golf") {
+		if (
+			prevProps.sport !== this.props.sport ||
+			prevProps.units !== this.props.units
+		) {
+			if (this.state.location !== "") {
 				this.setState({
-					wind: data.wind.speed,
-					vis: data.visibility / 1000,
+					url:
+						"http://api.openweathermap.org/data/2.5/weather?q=" +
+						this.state.location +
+						"&units=" +
+						this.state.units +
+						"&APPID=bf70994fbd262220efa80210e99b4208",
 				});
-			}
-			// pull relevant football data "feels like" and "humidity"
-			else if (this.state.sport === "football") {
-				this.setState({
-					feels: data.main.feels_like,
-					humidity: data.main.humidity,
-				});
-			} else if (this.state.sport === "cycling") {
-				this.setState({
-					feels: data.main.feels_like,
-					humidity: data.main.humidity,
-				});
+				console.log("I'm in here:", this.state.url);
+				const response = await fetch(this.state.url);
+				const data = await response.json();
+				// pull relevant golf data "windspeed" and "visibility"
+				if (this.state.sport === "golf") {
+					this.setState({
+						wind: data.wind.speed,
+						vis: data.visibility / 1000,
+					});
+				}
+				// pull relevant football data "feels like" and "humidity"
+				else if (this.state.sport === "football") {
+					this.setState({
+						feels: data.main.feels_like,
+						humidity: data.main.humidity,
+					});
+				} else if (this.state.sport === "cycling") {
+					this.setState({
+						feels: data.main.feels_like,
+						humidity: data.main.humidity,
+					});
+				}
 			}
 		}
 	}
@@ -702,7 +706,7 @@ class SportData extends Component {
 				this.state.location +
 				"&units=" +
 				nextProps.units +
-				"&APPID=0da1480eba025d430229e68cef88a466",
+				"&APPID=bf70994fbd262220efa80210e99b4208",
 		});
 	}
 	render() {
