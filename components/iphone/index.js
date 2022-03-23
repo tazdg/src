@@ -53,7 +53,8 @@ class MainWeather extends Component {
 				lat: null,
 				cond: null,
 				test: style.modalc,
-				url: "http://api.openweathermap.org/data/2.5/weather?q=London&units=metric&APPID=0da1480eba025d430229e68cef88a466",
+				// url: "http://api.openweathermap.org/data/2.5/weather?q=London&units=metric&APPID=0da1480eba025d430229e68cef88a466",
+        url: "http://api.openweathermap.org/data/2.5/weather?q=London&units=metric&APPID=aec509c22a90c6671cbfda7a5dda64d5",
 			});
 		} else {
 			this.setState({
@@ -81,7 +82,8 @@ class MainWeather extends Component {
 				url:
 					"http://api.openweathermap.org/data/2.5/weather?q=" +
 					this.props.Location +
-					"&units=metric&APPID=0da1480eba025d430229e68cef88a466",
+					// "&units=metric&APPID=0da1480eba025d430229e68cef88a466",
+          "&units=metric&APPID=aec509c22a90c6671cbfda7a5dda64d5",
 			});
 		}
 	}
@@ -130,7 +132,8 @@ class MainWeather extends Component {
 		const url =
 			"http://api.openweathermap.org/data/2.5/weather?q=" +
 			city +
-			"&units=metric&APPID=0da1480eba025d430229e68cef88a466";
+			// "&units=metric&APPID=0da1480eba025d430229e68cef88a466";
+      "&units=metric&APPID=aec509c22a90c6671cbfda7a5dda64d5";
 		const response = await fetch(url);
 		const data = await response.json();
 		this.setState({
@@ -283,7 +286,8 @@ class SevenDay extends Component {
 			this.state.lat +
 			"&lon=" +
 			this.state.lon +
-			"&exclude=hourly&appid=0da1480eba025d430229e68cef88a466&units=metric";
+			// "&exclude=hourly&appid=0da1480eba025d430229e68cef88a466&units=metric";
+      "&exclude=hourly&appid=aec509c22a90c6671cbfda7a5dda64d5&units=metric";
 		const response = await fetch(url);
 		const data = await response.json();
 
@@ -488,7 +492,7 @@ class ChangeSport extends Component {
           </div>
         </div> */}
 
-				{/* CHANGED TODAY BY TAZ */}
+
 				<div class={this.state.test}>
 					<div class={style.modal2}>
 						<Autocomplete
@@ -509,7 +513,7 @@ class ChangeSport extends Component {
 					</div>
 				</div>
 
-				{/* // Display of sport data box at the bottom of the page */}
+
 				<SportData sport={this.state.sport} location={this.props.location} />
 			</div>
 		);
@@ -536,6 +540,7 @@ class SportData extends Component {
 			if (this.state.sport === "golf") {
 				this.setState({
 					wind: data.wind.speed,
+          windDirection: data.wind.deg,
 					vis: data.visibility / 1000,
 				});
 			}
@@ -544,11 +549,32 @@ class SportData extends Component {
 				this.setState({
 					feels: data.main.feels_like,
 					humidity: data.main.humidity,
+
 				});
 			} else if (this.state.sport === "cycling") {
 				this.setState({
 					feels: data.main.feels_like,
 					humidity: data.main.humidity,
+
+				});
+			} else if (this.state.sport === "cricket") {
+				this.setState({
+					feels: data.main.feels_like,
+					humidity: data.main.humidity,
+ 
+
+				});
+			} else if (this.state.sport === "baseball") {
+				this.setState({
+					feels: data.main.feels_like,
+					humidity: data.main.humidity,
+
+				});
+			} else if (this.state.sport === "Skiing") {
+				this.setState({
+					feels: data.main.feels_like,
+					snow: data.main.snow,
+
 				});
 			}
 		}
@@ -562,7 +588,8 @@ class SportData extends Component {
 			url:
 				"http://api.openweathermap.org/data/2.5/weather?q=" +
 				this.state.location +
-				"&units=metric&APPID=0da1480eba025d430229e68cef88a466",
+				// "&units=metric&APPID=0da1480eba025d430229e68cef88a466",
+        "&units=metric&APPID=aec509c22a90c6671cbfda7a5dda64d5",
 		});
 	}
 	render() {
@@ -581,11 +608,12 @@ class SportData extends Component {
 				<div>
 					<div class={style.boxBottom}>
 						<p class={style.sporthead}>
-							Displaying Weather Info For: {this.state.sport}
+							Displaying weather info for: {this.state.sport}
 						</p>
 
 						<div class={style.weatherDisplayLeft}>
-							<p class={style.metricHeader}>Feels Like</p>
+							<p class={style.metricHeader}>Feels</p>
+              <br></br>
 							<p class={style.metricValue}>
 								{this.state.feels}
 								<sup>o</sup>C
@@ -594,8 +622,11 @@ class SportData extends Component {
 
 						<div class={style.weatherDisplayRight}>
 							<p class={style.metricHeader}>Humidity </p>
+              <br></br>
 							<p class={style.metricValue}>{this.state.humidity}%</p>
 						</div>
+         
+            
 					</div>
 				</div>
 			);
@@ -608,14 +639,14 @@ class SportData extends Component {
 						</p>
 
 						<div class={style.weatherDisplayLeft}>
-							<p class={style.metricHeader}> Wind Speed:</p>
+							<p class={style.metricHeader}> Wind</p>
 							<p class={style.metricValue}>{this.state.wind}m/s</p>
-							<p class={style.metricHeader}> Wind Direction:</p>
-							<p class={style.metricValue}>{this.state.rain}m/s</p>
+							<p class={style.metricValue}>{this.state.windDirection}m/s</p>
 						</div>
 
 						<div class={style.weatherDisplayRight}>
-							<p class={style.metricHeader}> Visability:</p>
+							<p class={style.metricHeader}> Visability</p>
+              <br></br>
 							<p class={style.metricValue}>{this.state.vis}km</p>
 						</div>
 					</div>
@@ -629,17 +660,89 @@ class SportData extends Component {
 							Displaying Weather Info For: {this.state.sport}
 						</p>
 						<div class={style.weatherDisplayLeft}>
-							<p class={style.metricHeader}> Wind Speed:</p>
+							<p class={style.metricHeader}> Wind</p>
+              <br></br>
 							<p class={style.metricValue}>{this.state.wind}m/s</p>
 						</div>
 
 						<div class={style.weatherDisplayRight}>
-							<p class={style.metricHeader}> Visability:</p>
+							<p class={style.metricHeader}> Visability</p>
+              <br></br>
 							<p class={style.metricValue}>{this.state.vis}km</p>
 						</div>
 					</div>
 				</div>
 			);
-		}
+		}  else if (this.state.sport === "cricket") {
+			return (
+				<div>
+					<div class={style.boxBottom}>
+						<p class={style.sporthead}>
+							Displaying Weather Info For: {this.state.sport}
+						</p>
+						<div class={style.weatherDisplayLeft}>
+							<p class={style.metricHeader}> Wind</p>
+              <br></br>
+							<p class={style.metricValue}>{this.state.wind}m/s</p>
+						</div>
+
+						<div class={style.weatherDisplayRight}>
+							<p class={style.metricHeader}> Visability</p>
+              <br></br>
+							<p class={style.metricValue}>{this.state.vis}km</p>
+						</div>
+					</div>
+				</div>
+			);
+		}  else if (this.state.sport === "baseball") {
+			return (
+				<div>
+					<div class={style.boxBottom}>
+						<p class={style.sporthead}>
+							Displaying Weather Info For: {this.state.sport}
+						</p>
+						<div class={style.weatherDisplayLeft}>
+							<p class={style.metricHeader}> Wind</p>
+              <br></br>
+							<p class={style.metricValue}>{this.state.wind}m/s</p>
+						</div>
+
+						<div class={style.weatherDisplayRight}>
+							<p class={style.metricHeader}> Visability</p>
+              <br></br>
+							<p class={style.metricValue}>{this.state.vis}km</p>
+						</div>
+					</div>
+				</div>
+			);
+		}  else if (this.state.sport === "skiing") {
+			return (
+				<div>
+					<div class={style.boxBottom}>
+						<p class={style.sporthead}>
+							Displaying Weather Info For: {this.state.sport}
+						</p>
+						<div class={style.weatherDisplayLeft}>
+
+            <p class={style.metricHeader}> Feels</p>
+              <br></br>
+              <p class={style.metricValue}>
+								{this.state.feels}
+								<sup>o</sup>C
+							</p>
+
+						</div>
+
+						<div class={style.weatherDisplayRight}>
+              <p class={style.metricHeader}> Snow</p>
+              <br></br>
+							<p class={style.metricValue}>{this.state.vis}mm</p>
+						</div>
+					</div>
+				</div>
+			);
+		} 
+
+
 	}
 }
