@@ -618,7 +618,7 @@ class ChangeSport extends Component {
 				<div class={this.state.test}>
 					<div class={style.modal2}>
 						<Autocomplete
-							class={style.test1}
+							
 							data={Sports}
 							placeholder="Search..."
 							emptyText="Sport Not Found"
