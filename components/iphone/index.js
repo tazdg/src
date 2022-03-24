@@ -658,7 +658,8 @@ class SportData extends Component {
 	async componentDidUpdate(prevProps) {
 		if (
 			prevProps.sport !== this.props.sport ||
-			prevProps.units !== this.props.units
+			prevProps.units !== this.props.units ||
+			prevProps.location !== this.props.location
 		) {
 			if (this.state.location !== "") {
 				this.setState({
