@@ -680,7 +680,7 @@ class SportData extends Component {
 				if (this.state.sport === "golf") {
 					this.setState({
 						wind: data.wind.speed,
-						  windDirection: data.wind.deg,
+						windDirection: data.wind.deg,
 						vis: data.visibility / 1000,
 					});
 				}
@@ -699,20 +699,16 @@ class SportData extends Component {
 					this.setState({
 						clouds: data.clouds.all,
 						humidity: data.main.humidity,
-
-
 					});
 				} else if (this.state.sport === "baseball") {
 					this.setState({
 						clouds: data.clouds.all,
 						humidity: data.main.humidity,
-
 					});
 				} else if (this.state.sport === "rowing") {
 					this.setState({
 						feels: data.main.feels_like,
 						wind: data.wind.speed,
-
 					});
 				}
 			}
@@ -786,23 +782,23 @@ class SportData extends Component {
 
 						<div class={style.weatherDisplayLeft}>
 							<p class={style.metricHeader}> Wind</p>
-							<p class={style.metricValue}>{this.state.wind}
-							{this.state.units === "metric" ? (
-									<PreactCompat.Fragment>
-										m/s
-									</PreactCompat.Fragment>
+							<p class={style.metricValue}>
+								{this.state.wind}
+								{this.state.units === "metric" ? (
+									<PreactCompat.Fragment>m/s</PreactCompat.Fragment>
 								) : (
-									<PreactCompat.Fragment>
-										mph
-									</PreactCompat.Fragment>
+									<PreactCompat.Fragment>mph</PreactCompat.Fragment>
 								)}
-								</p>
-							<p class={style.metricValue}>{this.state.windDirection}<sup>o</sup></p>
+							</p>
+							<p class={style.metricValue}>
+								{this.state.windDirection}
+								<sup>o</sup>
+							</p>
 						</div>
 
 						<div class={style.weatherDisplayRight}>
-							<p class={style.metricHeader}> Visability</p>
-              <br></br>
+							<p class={style.metricHeader}> Visibility</p>
+							<br></br>
 							<p class={style.metricValue}>{this.state.vis}km</p>
 						</div>
 					</div>
@@ -817,21 +813,18 @@ class SportData extends Component {
 						</p>
 						<div class={style.weatherDisplayLeft}>
 							<p class={style.metricHeader}> Wind</p>
-							<p class={style.metricValue}>{this.state.wind}
-							{this.state.units === "metric" ? (
-									<PreactCompat.Fragment>
-										m/s
-									</PreactCompat.Fragment>
+							<p class={style.metricValue}>
+								{this.state.wind}
+								{this.state.units === "metric" ? (
+									<PreactCompat.Fragment>m/s</PreactCompat.Fragment>
 								) : (
-									<PreactCompat.Fragment>
-										mph
-									</PreactCompat.Fragment>
+									<PreactCompat.Fragment>mph</PreactCompat.Fragment>
 								)}
 							</p>
 						</div>
 
 						<div class={style.weatherDisplayRight}>
-							<p class={style.metricHeader}> Visibility</p>
+							<p class={style.metricHeader}>Visibility</p>
 							<p class={style.metricValue}>{this.state.vis}km</p>
 						</div>
 					</div>
@@ -846,19 +839,19 @@ class SportData extends Component {
 						</p>
 						<div class={style.weatherDisplayLeft}>
 							<p class={style.metricHeader}> Clouds</p>
-              <br></br>
+							<br></br>
 							<p class={style.metricValue}>{this.state.clouds}%</p>
 						</div>
 
 						<div class={style.weatherDisplayRight}>
 							<p class={style.metricHeader}> Humidity</p>
-              <br></br>
+							<br></br>
 							<p class={style.metricValue}>{this.state.humidity}%</p>
 						</div>
 					</div>
 				</div>
 			);
-		}  else if (this.state.sport === "baseball") {
+		} else if (this.state.sport === "baseball") {
 			return (
 				<div>
 					<div class={style.boxBottom}>
@@ -867,13 +860,13 @@ class SportData extends Component {
 						</p>
 						<div class={style.weatherDisplayLeft}>
 							<p class={style.metricHeader}> Clouds</p>
-              <br></br>
+							<br></br>
 							<p class={style.metricValue}>{this.state.clouds}%</p>
 						</div>
 
 						<div class={style.weatherDisplayRight}>
 							<p class={style.metricHeader}> Humidity</p>
-              <br></br>
+							<br></br>
 							<p class={style.metricValue}>{this.state.humidity}%</p>
 						</div>
 					</div>
@@ -887,9 +880,9 @@ class SportData extends Component {
 							Displaying Weather Info For: {this.state.sport}
 						</p>
 						<div class={style.weatherDisplayLeft}>
-							<p class={style.metricHeader}> Wind</p>
-              	<br></br>
-			 			 <p class={style.metricValue}>
+							<p class={style.metricHeader}> Feels Like</p>
+							<br></br>
+							<p class={style.metricValue}>
 								{this.state.feels}
 								{/* Checks if units is metric, if so display Celcius else Farenheight. Same logic here
 								can be used for displaying the units for another sport. */}
@@ -906,17 +899,13 @@ class SportData extends Component {
 						</div>
 						<div class={style.weatherDisplayRight}>
 							<p class={style.metricHeader}> Wind</p>
-              <br></br>
+							<br></br>
 							<p class={style.metricValue}>
 								{this.state.wind}
 								{this.state.units === "metric" ? (
-									<PreactCompat.Fragment>
-										m/s
-									</PreactCompat.Fragment>
+									<PreactCompat.Fragment>m/s</PreactCompat.Fragment>
 								) : (
-									<PreactCompat.Fragment>
-										mph
-									</PreactCompat.Fragment>
+									<PreactCompat.Fragment>mph</PreactCompat.Fragment>
 								)}
 							</p>
 						</div>
