@@ -540,7 +540,7 @@ class SportData extends Component {
 			if (this.state.sport === "golf") {
 				this.setState({
 					wind: data.wind.speed,
-          windDirection: data.wind.deg,
+          			windDirection: data.wind.deg,
 					vis: data.visibility / 1000,
 				});
 			}
@@ -559,24 +559,31 @@ class SportData extends Component {
 				});
 			} else if (this.state.sport === "cricket") {
 				this.setState({
-					feels: data.main.feels_like,
+					clouds: data.clouds.all,
 					humidity: data.main.humidity,
  
 
 				});
 			} else if (this.state.sport === "baseball") {
 				this.setState({
-					feels: data.main.feels_like,
+					clouds: data.clouds.all,
 					humidity: data.main.humidity,
 
 				});
 			} else if (this.state.sport === "Skiing") {
 				this.setState({
 					feels: data.main.feels_like,
-					snow: data.main.snow,
+					snow: data.snow, // TODO doesn't work??
+
+				});
+			} else if (this.state.sport === "Rowing") {
+				this.setState({
+					wind: data.wind.speed,
+					rain: data.rain,
 
 				});
 			}
+
 		}
 	}
 
@@ -641,7 +648,7 @@ class SportData extends Component {
 						<div class={style.weatherDisplayLeft}>
 							<p class={style.metricHeader}> Wind</p>
 							<p class={style.metricValue}>{this.state.wind}m/s</p>
-							<p class={style.metricValue}>{this.state.windDirection}m/s</p>
+							<p class={style.metricValue}>{this.state.windDirection}<sup>o</sup></p>
 						</div>
 
 						<div class={style.weatherDisplayRight}>
@@ -681,15 +688,15 @@ class SportData extends Component {
 							Displaying Weather Info For: {this.state.sport}
 						</p>
 						<div class={style.weatherDisplayLeft}>
-							<p class={style.metricHeader}> Wind</p>
+							<p class={style.metricHeader}> Clouds</p>
               <br></br>
-							<p class={style.metricValue}>{this.state.wind}m/s</p>
+							<p class={style.metricValue}>{this.state.clouds}%</p>
 						</div>
 
 						<div class={style.weatherDisplayRight}>
-							<p class={style.metricHeader}> Visability</p>
+							<p class={style.metricHeader}> Humidity</p>
               <br></br>
-							<p class={style.metricValue}>{this.state.vis}km</p>
+							<p class={style.metricValue}>{this.state.humidity}%</p>
 						</div>
 					</div>
 				</div>
@@ -702,15 +709,15 @@ class SportData extends Component {
 							Displaying Weather Info For: {this.state.sport}
 						</p>
 						<div class={style.weatherDisplayLeft}>
-							<p class={style.metricHeader}> Wind</p>
+							<p class={style.metricHeader}> Clouds</p>
               <br></br>
-							<p class={style.metricValue}>{this.state.wind}m/s</p>
+							<p class={style.metricValue}>{this.state.clouds}%</p>
 						</div>
 
 						<div class={style.weatherDisplayRight}>
-							<p class={style.metricHeader}> Visability</p>
+							<p class={style.metricHeader}> Humidity</p>
               <br></br>
-							<p class={style.metricValue}>{this.state.vis}km</p>
+							<p class={style.metricValue}>{this.state.humidity}%</p>
 						</div>
 					</div>
 				</div>
@@ -730,13 +737,12 @@ class SportData extends Component {
 								{this.state.feels}
 								<sup>o</sup>C
 							</p>
-
 						</div>
 
 						<div class={style.weatherDisplayRight}>
               <p class={style.metricHeader}> Snow</p>
               <br></br>
-							<p class={style.metricValue}>{this.state.vis}mm</p>
+							<p class={style.metricValue}>{this.state.snow}mm</p> 
 						</div>
 					</div>
 				</div>

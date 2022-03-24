@@ -4,5 +4,6 @@ export const Sports = {
   cycling: {name: "Cycling"},
   cricket: {name: "Cricket"},
   baseball: {name: "Baseball"},
-  skiing: {name: "Skiing"}
+  skiing: {name: "Skiing"},
+  rowing: {name: "Rowing"}
 };
