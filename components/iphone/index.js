@@ -754,7 +754,7 @@ class SportData extends Component {
 						</p>
 
 						<div class={style.weatherDisplayLeft}>
-							<p class={style.metricHeader}>Feels</p>
+							<p class={style.metricHeader}>Feels Like</p>
 							<p class={style.metricValue}>
 								{this.state.feels}
 								{/* Checks if units is metric, if so display Celcius else Farenheight. Same logic here
@@ -803,7 +803,7 @@ class SportData extends Component {
 						</div>
 
 						<div class={style.weatherDisplayRight}>
-							<p class={style.metricHeader}> Visability</p>
+							<p class={style.metricHeader}> Visibility</p>
               <br></br>
 							<p class={style.metricValue}>{this.state.vis}km</p>
 						</div>
@@ -889,7 +889,7 @@ class SportData extends Component {
 							Displaying Weather Info For: {this.state.sport}
 						</p>
 						<div class={style.weatherDisplayLeft}>
-							<p class={style.metricHeader}> Wind</p>
+							<p class={style.metricHeader}> Feels Like</p>
               	<br></br>
 			 			 <p class={style.metricValue}>
 								{this.state.feels}
