@@ -10,6 +10,7 @@ import regeneratorRuntime from "regenerator-runtime";
 
 // imports for autocomplete
 import { Autocomplete } from "preact-autocomplete"; // From https://github.com/jimmy1217/React-AutoComplete
+
 // Line below is importing list of locations from locations.js
 import { Sports } from "./sports";
 import PreactCompat from "preact-compat";
@@ -280,6 +281,7 @@ class MainWeather extends Component {
 						<div class={this.state.test}>
 							<div class={style.modal}>
 								<input
+									class={style.location}
 									onChange={(e) => this.fetchSelected(e.target.value)}
 									type="text"
 									placeholder="Search.."
@@ -618,8 +620,8 @@ class ChangeSport extends Component {
 				<div class={this.state.test}>
 					<div class={style.modal2}>
 						<Autocomplete
-							class={style.test1}
 							data={Sports}
+							clickReset={true}
 							placeholder="Search..."
 							emptyText="Sport Not Found"
 							onChange={(e) => this.changeSport(e)}
