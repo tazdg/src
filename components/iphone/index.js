@@ -568,6 +568,9 @@ class ChangeSport extends Component {
 		this.setState({
 			sport: selected,
 		});
+		this.setState({
+			test: style.modalc,
+		});
 	}
 
 	render() {
@@ -696,20 +699,20 @@ class SportData extends Component {
 					this.setState({
 						clouds: data.clouds.all,
 						humidity: data.main.humidity,
-	 
-	
+
+
 					});
 				} else if (this.state.sport === "baseball") {
 					this.setState({
 						clouds: data.clouds.all,
 						humidity: data.main.humidity,
-	
+
 					});
 				} else if (this.state.sport === "rowing") {
 					this.setState({
 						feels: data.main.feels_like,
 						wind: data.wind.speed,
-	
+
 					});
 				}
 			}
